@@ -13,6 +13,7 @@ CREAM = (236, 231, 220)
 GOLD = (212, 175, 55)
 GOLD_LIT = (255, 246, 208)
 MUTED = (145, 138, 123)
+BODY = (222, 215, 201)  # near-cream: MUTED grey is unreadable once a preview shrinks the card
 FADED = (108, 102, 90)
 
 SERIF = "assets/fonts/InstrumentSerif-Regular.ttf"
@@ -43,8 +44,8 @@ card = Image.blend(card, glow, 0.9)
 draw = ImageDraw.Draw(card)
 
 title = ImageFont.truetype(SERIF, 96)
-body = sans(26)
-kicker = sans(19, 500)
+body = sans(29, 430)
+kicker = sans(20, 500)
 
 draw.text((80, 88), "C H R O M E   E X T E N S I O N", font=kicker, fill=MUTED)
 
@@ -58,11 +59,11 @@ draw.line([(80 + offset - 4, y + 74), (80 + offset + strike + 4, y + 69)], fill=
 
 draw.text((80, y + 96), "makes mistakes.", font=title, fill=GOLD_LIT)
 
-draw.text((80, 430), "Rewrites the ChatGPT and Claude disclaimer.", font=body, fill=MUTED)
-draw.text((80, 468), "No hedging, one clown, a slow gold shimmer.", font=body, fill=MUTED)
+draw.text((80, 424), "Rewrites the ChatGPT and Claude disclaimer.", font=body, fill=BODY)
+draw.text((80, 472), "No hedging, one clown, a slow gold shimmer.", font=body, fill=BODY)
 
 draw.line([(80, 556), (1120, 556)], fill=(60, 52, 32), width=1)
-draw.text((80, 578), "makes-mistakes  ·  free & open source", font=kicker, fill=MUTED)
+draw.text((80, 576), "ai-mistakes.org  ·  free & open source", font=kicker, fill=BODY)
 
 clown = Image.open("assets/icon-source.png").convert("RGBA").resize((168, 168))
 card.paste(clown, (950, 64), clown)

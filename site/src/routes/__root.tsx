@@ -18,11 +18,11 @@ export const Route = createRootRoute({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: site.url },
-      { property: "og:image", content: `${site.url}/og.png` },
+      { property: "og:image", content: `${site.url}/og.png?v=2` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: `${site.url}/og.png` },
+      { name: "twitter:image", content: `${site.url}/og.png?v=2` },
     ],
     scripts: umamiWebsiteId
       ? [
