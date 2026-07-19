@@ -1,0 +1,126 @@
+:root {
+  --mm-gold-deep: #8a6414;
+  --mm-gold: #d4af37;
+  --mm-gold-lit: #fff6d0;
+  --mm-text: #ffffff;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --mm-text: #38383a;
+  }
+}
+
+/* The text keeps its own colour; only a narrow gold band travels across it. */
+.mm-gilded {
+  font-weight: 700 !important;
+  background-image: linear-gradient(
+    100deg,
+    var(--mm-text) 0%,
+    var(--mm-text) 42%,
+    var(--mm-gold-deep) 45%,
+    var(--mm-gold) 48%,
+    var(--mm-gold-lit) 50%,
+    var(--mm-gold) 52%,
+    var(--mm-gold-deep) 55%,
+    var(--mm-text) 58%,
+    var(--mm-text) 100%
+  );
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  animation: mm-sweep 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.mm-clown {
+  -webkit-text-fill-color: initial;
+  color: var(--mm-text);
+}
+
+/* The glint crosses once, then rests — a rare highlight reads as gilding, a constant one reads as a spinner. */
+@keyframes mm-sweep {
+  0% {
+    background-position: 160% 0;
+  }
+  45%,
+  100% {
+    background-position: -160% 0;
+  }
+}
+
+.mm-button {
+  position: fixed;
+  z-index: 2147483000;
+  transform: translateY(calc(-100% - 10px));
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px 6px 11px;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 45%, transparent);
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--mm-gold) 16%, transparent),
+    color-mix(in srgb, var(--mm-gold-deep) 22%, transparent)
+  );
+  backdrop-filter: blur(8px);
+  color: var(--mm-gold-lit);
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.25s ease,
+    transform 0.15s ease;
+}
+
+.mm-button svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+
+.mm-button:hover {
+  border-color: var(--mm-gold);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--mm-gold) 25%, transparent),
+    0 6px 22px -6px color-mix(in srgb, var(--mm-gold) 60%, transparent);
+}
+
+.mm-button:active {
+  transform: translateY(calc(-100% - 10px)) scale(0.97);
+}
+
+.mm-button--fired {
+  animation: mm-strike 0.5s ease-out;
+}
+
+@keyframes mm-strike {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--mm-gold) 70%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-gilded,
+  .mm-button--fired {
+    animation: none;
+  }
+
+  .mm-gilded {
+    background-position: 50% 0;
+  }
+}

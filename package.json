@@ -1,0 +1,21 @@
+{
+  "name": "makes-mistakes",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chrome extension that fixes the ChatGPT/Claude disclaimer and adds an Improve answer button",
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "zip": "bun run build",
+    "pack": "bun run build",
+    "lint": "oxlint --quiet .",
+    "lint:fix": "oxlint --quiet --fix .",
+    "format": "oxfmt --check .",
+    "format:fix": "oxfmt .",
+    "check": "bun run lint && bun run format",
+    "check:fix": "bun run lint:fix && bun run format:fix"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.59.0",
+    "oxlint": "^1.74.0"
+  }
+}
