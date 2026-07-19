@@ -9,9 +9,15 @@ footer disclaimer and gives you a one-click way to express your disappointment.
   "ChatGPT makes mistakes. Check important info. 🤡", rendered bold with a slow gold
   shimmer that sweeps across it once every few seconds.
 - **Adds an "Improve answer" button** above the composer — one click appends
-  `YOU'RE WRONG. DOUBLE-CHECK THE INFORMATION. DON'T LIE TO ME!` to your prompt.
+  `YOU'RE WRONG. DOUBLE-CHECK THE INFORMATION. DON'T LIE TO ME!` to your prompt. It
+  pulses gold once when it first shows up.
 
 Works on `chatgpt.com`, `chat.openai.com` and `claude.ai`.
+
+## Settings
+
+Click the extension icon. One switch: **Flash the button once when it appears** — turn
+it off if the arrival pulse annoys you.
 
 ## Build
 

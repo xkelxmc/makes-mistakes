@@ -54,5 +54,13 @@ Both sites are React apps that re-render constantly, so:
   composers. It is deprecated but it is the only path that fires the `beforeinput`
   events ProseMirror listens for — setting `textContent` silently loses the text on
   the next render. Do not "modernize" it without verifying in a real tab.
-- The composer selector (`COMPOSER` in `src/content.js`) is the most likely thing to
-  break when a site ships a redesign. That is the first place to look.
+- The button is **mounted inside the host's own layout** (`MOUNTS` in
+  `src/content.js`), never positioned with `fixed` + JS-computed coordinates. An
+  earlier version chased the composer's `getBoundingClientRect()` on scroll and
+  visibly lagged a frame behind during overscroll bounce. The anchors:
+  - ChatGPT — `[data-prompt-textarea-header]`, an empty `absolute bottom-full` slot
+    the app already renders above the form.
+  - Claude — `[data-chat-input-container]`, which is `sticky` (so it is a containing
+    block) and reserves `pt-6` of headroom.
+- Selectors (`COMPOSER`, `MOUNTS`) are the first thing to break on a host redesign.
+  That is where to look when the button vanishes.

@@ -51,9 +51,6 @@
 }
 
 .mm-button {
-  position: fixed;
-  z-index: 2147483000;
-  transform: translateY(calc(-100% - 10px));
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -98,7 +95,21 @@
 }
 
 .mm-button:active {
-  transform: translateY(calc(-100% - 10px)) scale(0.97);
+  transform: scale(0.97);
+}
+
+/* ChatGPT's header slot already sits above the form — plain flow is enough. */
+.mm-button--flow {
+  margin-bottom: 8px;
+}
+
+/* Claude's composer container is sticky (so it is a containing block) and reserves
+   24px of top padding, which is exactly where this sits. */
+.mm-button--overlay {
+  position: absolute;
+  top: -1px;
+  inset-inline-start: 8px;
+  z-index: 2;
 }
 
 .mm-button--fired {
@@ -111,6 +122,26 @@
   }
   100% {
     box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+/* One announcement on arrival, then it stays quiet forever. */
+.mm-button--flash {
+  animation: mm-arrive 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes mm-arrive {
+  0% {
+    border-color: var(--mm-gold-lit);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--mm-gold) 65%, transparent);
+    color: var(--mm-gold-lit);
+  }
+  35% {
+    border-color: var(--mm-gold-lit);
+    box-shadow: 0 0 18px 2px color-mix(in srgb, var(--mm-gold) 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
   }
 }
 

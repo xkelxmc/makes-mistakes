@@ -3,6 +3,11 @@
   "name": "Makes Mistakes",
   "version": "1.0.0",
   "description": "Drops the \"can\" from the ChatGPT and Claude disclaimers and gilds what's left.",
+  "permissions": ["storage"],
+  "action": {
+    "default_title": "Makes Mistakes",
+    "default_popup": "src/popup.html"
+  },
   "content_scripts": [
     {
       "matches": ["https://chatgpt.com/*", "https://chat.openai.com/*", "https://claude.ai/*"],

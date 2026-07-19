@@ -5,12 +5,20 @@ const GILDED = "mm-gilded"
 const CLOWN_CLASS = "mm-clown"
 
 const NUDGE = "YOU'RE WRONG. DOUBLE-CHECK THE INFORMATION. DON'T LIE TO ME!"
-const COMPOSER =
-  '#prompt-textarea, div[contenteditable="true"].ProseMirror, textarea[data-testid="chat-input"]'
+const COMPOSER = '#prompt-textarea, [contenteditable="true"][data-testid="chat-input"]'
+
+// Both hosts already ship a positioned box above the composer, so the button can ride
+// along in their layout instead of being chased with fixed coordinates.
+const MOUNTS = [
+  { selector: "[data-prompt-textarea-header]", variant: "mm-button--flow" },
+  { selector: "[data-chat-input-container]", variant: "mm-button--overlay" },
+]
 
 // lucide "zap"
 const ZAP =
   "M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+
+const settings = chrome.storage.sync.get({ flash: true })
 
 function gild(textNode) {
   const text = textNode.nodeValue
@@ -44,15 +52,11 @@ function sweep(root) {
   found.forEach(gild)
 }
 
-function insertNudge(composer) {
-  composer.focus()
+function insertNudge() {
+  const composer = document.querySelector(COMPOSER)
+  if (!composer) return
 
-  if (composer instanceof HTMLTextAreaElement) {
-    const setValue = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value").set
-    setValue.call(composer, composer.value ? `${composer.value} ${NUDGE}` : NUDGE)
-    composer.dispatchEvent(new Event("input", { bubbles: true }))
-    return
-  }
+  composer.focus()
 
   // execCommand fires beforeinput/input, which is how ProseMirror learns about the text
   const selection = window.getSelection()
@@ -65,49 +69,47 @@ function insertNudge(composer) {
 }
 
 function buildButton() {
-  const button = document.createElement("button")
-  button.type = "button"
-  button.className = "mm-button"
-  button.title = "Improve answer"
-  button.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ZAP}"/></svg><span>Improve answer</span>`
-  return button
+  const element = document.createElement("button")
+  element.type = "button"
+  element.className = "mm-button"
+  element.title = "Improve answer"
+  element.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ZAP}"/></svg><span>Improve answer</span>`
+  return element
 }
 
 const button = buildButton()
-let composer = null
+let flashed = false
 
 button.addEventListener("click", () => {
-  if (!composer) return
-  insertNudge(composer)
+  insertNudge()
   button.classList.remove("mm-button--fired")
   void button.offsetWidth
   button.classList.add("mm-button--fired")
 })
 
-// Anchor to the composer's outer shell, not the editable itself — the editable grows
-// upward as you type, which would drag the button down over the input.
-function anchorOf(element) {
-  return element.closest("form, fieldset") ?? element
+async function flashOnce() {
+  if (flashed) return
+  flashed = true
+
+  const { flash } = await settings
+  if (flash) button.classList.add("mm-button--flash")
 }
 
-function place() {
-  if (!composer?.isConnected) {
-    composer = document.querySelector(COMPOSER)
-    if (!composer) {
-      button.remove()
-      return
-    }
-  }
+function mount() {
+  const target = MOUNTS.map((m) => ({ host: document.querySelector(m.selector), ...m })).find(
+    (m) => m.host
+  )
 
-  const box = anchorOf(composer).getBoundingClientRect()
-  if (box.width === 0) {
+  if (!target) {
     button.remove()
     return
   }
+  if (button.parentElement === target.host) return
 
-  if (!button.isConnected) document.body.append(button)
-  button.style.left = `${box.left}px`
-  button.style.top = `${box.top}px`
+  button.classList.remove("mm-button--flow", "mm-button--overlay")
+  button.classList.add(target.variant)
+  target.host.prepend(button)
+  flashOnce()
 }
 
 const pending = new Set()
@@ -118,7 +120,7 @@ function flush() {
   const roots = [...pending]
   pending.clear()
   roots.forEach(sweep)
-  place()
+  mount()
 }
 
 function schedule(node) {
@@ -129,7 +131,7 @@ function schedule(node) {
 }
 
 sweep(document.body)
-place()
+mount()
 
 // The disclaimer and the composer are re-rendered on every navigation and stream, so watch instead of patching once.
 new MutationObserver((records) => {
@@ -138,6 +140,3 @@ new MutationObserver((records) => {
     else record.addedNodes.forEach(schedule)
   }
 }).observe(document.body, { childList: true, subtree: true, characterData: true })
-
-window.addEventListener("resize", place)
-window.addEventListener("scroll", place, true)
