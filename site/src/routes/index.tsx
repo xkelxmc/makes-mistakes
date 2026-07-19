@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Download, Palette, Type, Zap } from "lucide-react"
 import { ChatMock } from "@/components/chat-mock"
+import { ComingSoon } from "@/components/coming-soon"
 import { GithubMark } from "@/components/github-mark"
 import { SiteFooter } from "@/components/site-footer"
 import { links } from "@/lib/links"
@@ -121,6 +122,10 @@ function Home() {
             </article>
           ))}
         </section>
+
+        <div className="hairline" />
+
+        <ComingSoon />
 
         <div className="hairline" />
 
