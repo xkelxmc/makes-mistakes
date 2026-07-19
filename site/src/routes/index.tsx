@@ -60,7 +60,7 @@ function Home() {
               ChatGPT{" "}
               <span className="text-muted-foreground/45 relative italic">
                 can make
-                <span className="bg-gold absolute inset-x-[-0.06em] top-[0.52em] h-[0.045em] -rotate-1 rounded-full" />
+                <span className="bg-gold absolute inset-x-[-0.06em] top-[0.63em] h-[0.045em] -rotate-[0.6deg] rounded-full" />
               </span>
             </span>
             <span className="gilded sweep mt-1 block font-normal">makes mistakes.</span>
