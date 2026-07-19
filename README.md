@@ -13,7 +13,7 @@ footer disclaimer and gives you a one-click way to express your disappointment.
 
 Works on `chatgpt.com`, `chat.openai.com` and `claude.ai`.
 
-**Landing page:** <https://makes-mistakes-theta.vercel.app>
+**Landing page:** <https://ai-mistakes.org>
 
 ## Settings
 

@@ -28,5 +28,5 @@ export const links = {
 export const site = {
   name: "Makes Mistakes",
   tagline: "ChatGPT makes mistakes. The footer finally admits it.",
-  url: "https://makes-mistakes-theta.vercel.app",
+  url: "https://ai-mistakes.org",
 }
