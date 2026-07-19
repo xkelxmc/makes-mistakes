@@ -8,10 +8,20 @@ export function SiteFooter() {
       <div className="text-muted-foreground flex flex-col items-center justify-between gap-3 text-xs sm:flex-row">
         <p>MIT licensed. Not affiliated with OpenAI or Anthropic.</p>
         <nav className="flex items-center gap-5">
-          <a href={links.github} className="hover:text-gold transition-colors">
+          <a
+            href={links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gold transition-colors"
+          >
             GitHub
           </a>
-          <a href={links.issues} className="hover:text-gold transition-colors">
+          <a
+            href={links.issues}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gold transition-colors"
+          >
             Issues
           </a>
           <Link to="/privacy" className="hover:text-gold transition-colors">

@@ -17,6 +17,8 @@ export function WishlistForm() {
     return (
       <a
         href={links.wishlist}
+        target="_blank"
+        rel="noopener noreferrer"
         className="bg-gold text-primary-foreground hover:bg-gold-lit inline-flex h-11 items-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors"
       >
         Join the wishlist
@@ -121,7 +123,12 @@ export function WishlistForm() {
             Try again
           </button>{" "}
           or{" "}
-          <a href={links.issues} className="underline underline-offset-2">
+          <a
+            href={links.issues}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2"
+          >
             open an issue
           </a>
           .

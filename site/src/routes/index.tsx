@@ -80,6 +80,8 @@ function Home() {
             {links.chromeWebStore && (
               <a
                 href={links.chromeWebStore}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => track("store")}
                 className="transition-opacity hover:opacity-85"
               >
@@ -105,6 +107,8 @@ function Home() {
 
             <a
               href={links.github}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground inline-flex h-11 items-center gap-2 px-2 text-sm transition-colors"
             >
               <GithubMark className="size-4" />
