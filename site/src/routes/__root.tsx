@@ -18,11 +18,11 @@ export const Route = createRootRoute({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: site.url },
-      { property: "og:image", content: `${site.url}/og.png?v=2` },
+      { property: "og:image", content: `${site.url}/og.png?v=3` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: `${site.url}/og.png?v=2` },
+      { name: "twitter:image", content: `${site.url}/og.png?v=3` },
     ],
     // Served from our own domain (see routes/stats.$.ts) so ad blockers have nothing to
     // match on; data-host-url sends the collected events back through the same proxy.

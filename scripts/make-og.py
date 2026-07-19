@@ -13,7 +13,7 @@ CREAM = (236, 231, 220)
 GOLD = (212, 175, 55)
 GOLD_LIT = (255, 246, 208)
 MUTED = (145, 138, 123)
-BODY = (222, 215, 201)  # near-cream: MUTED grey is unreadable once a preview shrinks the card
+BODY = (240, 236, 228)  # near-white and semibold: anything softer dissolves in a shrunken preview
 FADED = (108, 102, 90)
 
 SERIF = "assets/fonts/InstrumentSerif-Regular.ttf"
@@ -22,7 +22,8 @@ SANS = "assets/fonts/IBMPlexSans.ttf"
 
 def sans(size, weight=400):
     font = ImageFont.truetype(SANS, size)
-    font.set_variation_by_axes([100, weight])
+    # Axis order is [Weight, Width] — swapping them silently renders everything Thin.
+    font.set_variation_by_axes([weight, 100])
     return font
 
 
@@ -44,8 +45,8 @@ card = Image.blend(card, glow, 0.9)
 draw = ImageDraw.Draw(card)
 
 title = ImageFont.truetype(SERIF, 96)
-body = sans(29, 430)
-kicker = sans(20, 500)
+body = sans(33, 560)
+kicker = sans(20, 560)
 
 draw.text((80, 88), "C H R O M E   E X T E N S I O N", font=kicker, fill=MUTED)
 
