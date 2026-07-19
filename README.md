@@ -1,4 +1,4 @@
-# Makes Mistakes
+# Makes Mistakes 🤡
 
 A joke Chrome extension for chatgpt.com and claude.ai. It removes the hedge from the
 footer disclaimer and gives you a one-click way to express your disappointment.
@@ -7,10 +7,9 @@ footer disclaimer and gives you a one-click way to express your disappointment.
 
 - **Rewrites the disclaimer** — "ChatGPT can make mistakes." becomes
   "ChatGPT makes mistakes. Check important info. 🤡", rendered bold with a slow gold
-  shimmer that sweeps across it once every few seconds.
+  band that glides across it. Claude's wordier version gets the same treatment.
 - **Adds an "Improve answer" button** above the composer — one click appends
-  `YOU'RE WRONG. DOUBLE-CHECK THE INFORMATION. DON'T LIE TO ME!` to your prompt. It
-  pulses gold once when it first shows up.
+  `YOU'RE WRONG. DOUBLE-CHECK THE INFORMATION. DON'T LIE TO ME!` to your prompt.
 
 Works on `chatgpt.com`, `chat.openai.com` and `claude.ai`.
 
@@ -19,39 +18,49 @@ Works on `chatgpt.com`, `chat.openai.com` and `claude.ai`.
 Click the extension icon. One switch: **Flash the button once when it appears** — turn
 it off if the arrival pulse annoys you.
 
-## Build
-
-```bash
-bun run build
-```
-
-Produces a clean copy in `dist/makes-mistakes/` (manifest + `src/` only, no configs or
-`node_modules`) and zips it as `dist/makes-mistakes-<version>.zip` for sharing or the
-Web Store.
-
 ## Install (unpacked)
 
-1. Open `chrome://extensions`.
-2. Turn on **Developer mode**.
-3. **Load unpacked** → pick `dist/makes-mistakes` (or the repo root — same thing).
+1. Grab the `.zip` from the [latest release](https://github.com/xkelxmc/makes-mistakes/releases/latest) and unpack it.
+2. Open `chrome://extensions` and turn on **Developer mode**.
+3. **Load unpacked** → pick the unpacked folder.
 4. Reload any open ChatGPT / Claude tab.
 
-Chrome cannot install a `.zip` directly — whoever receives it unzips first, then loads
-the resulting folder unpacked.
+Chrome cannot install a `.zip` directly — unpack it first, then load the folder.
 
-## Stack
+## Repo layout
 
-Plain MV3 content script — no build step, no framework, no bundler. Load the folder
-as-is. [oxlint](https://oxc.rs) + [oxfmt](https://oxc.rs) keep it tidy:
+```
+manifest.json      MV3 manifest
+src/               content script, popup, icons
+site/              landing page (TanStack Start, SSR, deployed on Vercel)
+scripts/           build + Open Graph image generation
+assets/            icon source and the fonts used to draw the OG card
+```
+
+The extension itself has **no build step** — the repo root *is* the extension.
+
+## Commands
 
 ```bash
-bun run check:fix
+bun run check:fix   # lint + format (oxlint + oxfmt)
+bun run build       # dist/makes-mistakes + dist/makes-mistakes-<version>.zip
+bun run dev         # landing page on :9224
+bun run dev:portless  # landing page at makes-mistakes.localhost
 ```
 
-## Layout
+`zip` and `pack` are aliases of `build`. The landing page has its own `check:fix`
+inside `site/`, and `python3 scripts/make-og.py` redraws the Open Graph card.
 
+## Releasing
+
+The version in `manifest.json` is the source of truth. Tagging triggers CI, which
+verifies the tag matches it, builds the zip, publishes a GitHub release, and — once the
+Chrome Web Store secrets are set — uploads and submits the new version.
+
+```bash
+git tag v1.1.0 && git push --tags
 ```
-manifest.json     MV3 manifest, content script registration
-src/content.js    disclaimer rewrite + composer button
-src/content.css   gold shimmer + button styling
-```
+
+## License
+
+MIT. Not affiliated with OpenAI or Anthropic.

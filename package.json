@@ -12,7 +12,10 @@
     "format": "oxfmt --check .",
     "format:fix": "oxfmt .",
     "check": "bun run lint && bun run format",
-    "check:fix": "bun run lint:fix && bun run format:fix"
+    "check:fix": "bun run lint:fix && bun run format:fix",
+    "dev": "cd site && bun run dev",
+    "dev:portless": "cd site && bun run dev:portless",
+    "site:build": "cd site && bun run build"
   },
   "devDependencies": {
     "oxfmt": "^0.59.0",

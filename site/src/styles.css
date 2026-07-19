@@ -1,0 +1,281 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
+@import "@fontsource-variable/ibm-plex-sans";
+
+@theme inline {
+  --font-heading: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-lit: var(--gold-lit);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+}
+
+/* One theme only. The extension lives on dark chat UIs; the site matches it. */
+:root {
+  --gold: #d4af37;
+  --gold-deep: #8a6414;
+  --gold-lit: #fff6d0;
+
+  --background: #0b0a08;
+  --foreground: #ece7dc;
+  --card: #131109;
+  --card-foreground: #ece7dc;
+  --popover: #131109;
+  --popover-foreground: #ece7dc;
+  --primary: #d4af37;
+  --primary-foreground: #14110a;
+  --secondary: #1c1811;
+  --secondary-foreground: #ece7dc;
+  --muted: #1c1811;
+  --muted-foreground: #918a7b;
+  --accent: #241f15;
+  --accent-foreground: #fff6d0;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: color-mix(in srgb, var(--gold) 18%, transparent);
+  --input: color-mix(in srgb, var(--gold) 22%, transparent);
+  --ring: var(--gold);
+  --radius: 0.625rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(90% 55% at 12% -8%, #221c11 0%, transparent 62%),
+      radial-gradient(60% 40% at 92% 4%, #1a150d 0%, transparent 70%);
+    background-attachment: fixed;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--gold) 30%, transparent);
+    color: var(--gold-lit);
+  }
+}
+
+@layer components {
+  /* The extension's signature: text keeps its colour, a narrow gold band travels across
+     once. `currentColor` cannot be used for the base stops — `color: transparent` below
+     would resolve it to transparent and the text would vanish after the sweep. */
+  .gilded {
+    --gild-base: var(--foreground);
+
+    /* background-clip: text crops at the padding box, so descenders need headroom. */
+    padding-bottom: 0.14em;
+
+    background-image: linear-gradient(
+      100deg,
+      var(--gild-base) 0%,
+      var(--gild-base) 34%,
+      var(--gold-deep) 40%,
+      var(--gold) 46%,
+      var(--gold-lit) 50%,
+      var(--gold) 54%,
+      var(--gold-deep) 60%,
+      var(--gild-base) 66%,
+      var(--gild-base) 100%
+    );
+    background-size: 300% 100%;
+    background-position: -160% 0;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Kept separate from .gilded: two classes both setting `animation` would overwrite
+     each other, which is how the sweep ended up running twice. */
+  .sweep {
+    animation: gild-sweep 5.5s cubic-bezier(0.36, 0, 0.22, 1) 0.1s 1 both;
+  }
+
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.3;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.5'/></svg>");
+  }
+
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--gold) 38%, transparent) 18%,
+      color-mix(in srgb, var(--gold) 38%, transparent) 82%,
+      transparent
+    );
+  }
+
+  .rise {
+    animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+
+  /* Two tracks: the wrapper flies in and out, the inner hand flicks on contact.
+     One combined movement reads as "hand hovers", not as a slap. */
+  .slap-approach {
+    animation: slap-approach 1.5s cubic-bezier(0.34, 0.8, 0.3, 1) both;
+  }
+
+  .slap-flick {
+    display: inline-block;
+    animation: slap-flick 0.5s cubic-bezier(0.3, 1.5, 0.45, 1) 0.52s both;
+  }
+
+  /* Knocked aside by the hit, just before the text is swapped. */
+  .knocked {
+    animation: knocked 0.14s ease-in both;
+  }
+
+  /* Comes back from the right — the swap lands on the rebound. */
+  .impact {
+    animation: impact 0.5s cubic-bezier(0.3, 1.6, 0.45, 1);
+  }
+}
+
+/* A slow 5.5s glide, matching the extension. Left to right, so it reads as spreading
+   out from the hit rather than crawling in behind the last word. */
+@keyframes gild-sweep {
+  from {
+    background-position: 160% 0;
+  }
+  to {
+    background-position: -160% 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Flies in, holds while the flick lands (HIT_AT in chat-mock), then leaves. */
+@keyframes slap-approach {
+  0% {
+    opacity: 0;
+    transform: translate(84px, -58px) scale(0.82);
+  }
+  30% {
+    opacity: 1;
+  }
+  42% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  62% {
+    opacity: 1;
+    transform: translate(0, 2px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(66px, -50px) scale(0.88);
+  }
+}
+
+/* The slap itself: cocked back, snapped down, settles. */
+@keyframes slap-flick {
+  0% {
+    transform: rotate(26deg);
+  }
+  38% {
+    transform: rotate(38deg);
+  }
+  62% {
+    transform: rotate(-14deg);
+  }
+  100% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes knocked {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(-11px);
+  }
+}
+
+@keyframes impact {
+  0% {
+    transform: translateX(10px) scale(0.97);
+  }
+  55% {
+    transform: translateX(-3px) scale(1.02);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact,
+  .knocked,
+  .rise,
+  .slap-approach,
+  .slap-flick,
+  .sweep {
+    animation: none;
+  }
+
+  .gilded {
+    background-position: 50% 0;
+  }
+
+  .slap-approach {
+    opacity: 0;
+  }
+}

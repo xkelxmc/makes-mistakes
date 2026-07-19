@@ -17,13 +17,13 @@
   background-image: linear-gradient(
     100deg,
     var(--mm-text) 0%,
-    var(--mm-text) 42%,
-    var(--mm-gold-deep) 45%,
-    var(--mm-gold) 48%,
+    var(--mm-text) 34%,
+    var(--mm-gold-deep) 40%,
+    var(--mm-gold) 46%,
     var(--mm-gold-lit) 50%,
-    var(--mm-gold) 52%,
-    var(--mm-gold-deep) 55%,
-    var(--mm-text) 58%,
+    var(--mm-gold) 54%,
+    var(--mm-gold-deep) 60%,
+    var(--mm-text) 66%,
     var(--mm-text) 100%
   );
   background-size: 300% 100%;
@@ -31,7 +31,7 @@
   -webkit-background-clip: text;
   color: transparent !important;
   -webkit-text-fill-color: transparent;
-  animation: mm-sweep 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: mm-sweep 14s cubic-bezier(0.36, 0, 0.22, 1) infinite;
 }
 
 .mm-clown {
@@ -39,12 +39,12 @@
   color: var(--mm-text);
 }
 
-/* The glint crosses once, then rests — a rare highlight reads as gilding, a constant one reads as a spinner. */
+/* A slow 5.5s glide, then a long rest. Anything faster reads as a cheap flicker. */
 @keyframes mm-sweep {
   0% {
     background-position: 160% 0;
   }
-  45%,
+  39%,
   100% {
     background-position: -160% 0;
   }

@@ -1,3 +1,9 @@
 node_modules
 dist
 .DS_Store
+.env
+.vercel
+site/.output
+site/.nitro
+site/.tanstack
+site/dist
