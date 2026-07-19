@@ -93,10 +93,12 @@ export function WishlistForm() {
           className="pointer-events-none absolute h-0 w-0 opacity-0"
         />
 
+        {/* Stays lit while the field is empty — dimming the main call to action is the
+            fastest way to make nobody notice it. Empty input is caught by `required`. */}
         <button
           type="submit"
-          disabled={state === "sending" || !email.trim()}
-          className="bg-gold text-primary-foreground hover:bg-gold-lit inline-flex h-11 flex-none items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors disabled:cursor-default disabled:opacity-45"
+          disabled={state === "sending"}
+          className="bg-gold text-primary-foreground hover:bg-gold-lit inline-flex h-11 flex-none items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors disabled:cursor-default disabled:opacity-70"
         >
           {state === "sending" ? (
             <>

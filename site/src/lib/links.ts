@@ -22,6 +22,8 @@ export const links = {
   chromeWebStore: storeUrl,
   install: storeUrl ?? "https://github.com/xkelxmc/makes-mistakes/releases/latest",
   wishlist: wishlistUrl,
+  suggest:
+    "https://github.com/xkelxmc/makes-mistakes/issues/new?labels=feature&title=Feature%3A+&body=What+should+the+extension+do%3F",
   kitFormAction: kitFormId ? `https://app.kit.com/forms/${kitFormId}/subscriptions` : null,
 }
 

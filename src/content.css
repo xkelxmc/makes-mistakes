@@ -34,6 +34,39 @@
   animation: mm-sweep 14s cubic-bezier(0.36, 0, 0.22, 1) infinite;
 }
 
+/* Same width as the composer and centred like it, so the button starts exactly where
+   the input does. */
+.mm-rail {
+  display: flex;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+/* ChatGPT keeps its own disclaimer in this column — a rail with height would shove it
+   upwards, so the button hangs above the composer without taking any space. */
+.mm-rail--float {
+  position: relative;
+  height: 0;
+}
+
+.mm-rail--float .mm-button {
+  position: absolute;
+  bottom: 8px;
+  inset-inline-start: 0;
+  margin-bottom: 0;
+}
+
+.mm-grafted {
+  margin: 8px 0 0;
+  text-align: center;
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  font-size: 12px;
+}
+
 .mm-clown {
   -webkit-text-fill-color: initial;
   color: var(--mm-text);
@@ -51,6 +84,10 @@
 }
 
 .mm-button {
+  /* Gemini lays a gradient scrim over its composer area; without this the button sits
+     underneath it and comes out muddy. */
+  position: relative;
+  z-index: 10;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -98,8 +135,15 @@
   transform: scale(0.97);
 }
 
-/* ChatGPT's header slot already sits above the form — plain flow is enough. */
+/* ChatGPT has a header slot above the form; Gemini and Grok get the button prepended
+   to their composer container. Plain flow avoids their clipping and sticky boxes.
+   The sizing rules matter: these hosts are flex columns, and a flex child would
+   otherwise stretch to the full width of the composer. */
 .mm-button--flow {
+  align-self: flex-start;
+  width: fit-content;
+  max-width: fit-content;
+  flex: none;
   margin-bottom: 8px;
 }
 
@@ -107,7 +151,7 @@
    24px of top padding, which is exactly where this sits. */
 .mm-button--overlay {
   position: absolute;
-  top: -1px;
+  top: 7px;
   inset-inline-start: 8px;
   z-index: 2;
 }

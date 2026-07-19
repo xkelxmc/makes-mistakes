@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Makes Mistakes",
-  "version": "1.0.0",
-  "description": "Drops the \"can\" from the ChatGPT and Claude disclaimers and gilds what's left.",
+  "version": "1.1.0",
+  "description": "Drops the \"can\" from the ChatGPT, Claude, Gemini and Grok disclaimers and gilds what's left.",
   "permissions": ["storage"],
   "icons": {
     "16": "src/icons/icon-16.png",
@@ -22,7 +22,13 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://chatgpt.com/*", "https://chat.openai.com/*", "https://claude.ai/*"],
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://grok.com/*"
+      ],
       "js": ["src/content.js"],
       "css": ["src/content.css"],
       "run_at": "document_idle",

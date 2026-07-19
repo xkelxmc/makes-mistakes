@@ -8,6 +8,21 @@ The version in `manifest.json` is the source of truth — a release tag must mat
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-07-20
+
+### Added
+
+- Gemini and Grok support. Gemini words its disclaimer with a comma rather than a full
+  stop, so the pattern no longer requires trailing punctuation.
+- Grok ships no disclaimer at all, so the extension writes one under its composer.
+
+### Changed
+
+- The button now waits for an actual answer before appearing, on every host.
+- It is anchored to a rail matching the composer's own width instead of relying on each
+  host's header slot — ChatGPT keeps its own disclaimer in that slot, and in an empty
+  chat the slot sits somewhere else entirely.
+
 ## [1.0.0] - 2026-07-19
 
 ### Added
@@ -19,7 +34,7 @@ The version in `manifest.json` is the source of truth — a release tag must mat
   to the prompt.
 - Popup setting to turn off the button's arrival flash.
 - Extension icons at 16/32/48/128.
-- Landing page (TanStack Start, SSR) with a live demo of the rewrite.
 
-[unreleased]: https://github.com/xkelxmc/makes-mistakes/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/xkelxmc/makes-mistakes/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/xkelxmc/makes-mistakes/releases/tag/v1.1.0
 [1.0.0]: https://github.com/xkelxmc/makes-mistakes/releases/tag/v1.0.0

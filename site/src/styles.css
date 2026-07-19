@@ -157,6 +157,70 @@
     animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   }
 
+  /* Split-flap board: the halves sit still, the two flaps do the moving. Everything is
+     stacked in one grid cell so the spacer alone dictates baseline and width. */
+  .flip {
+    display: inline-grid;
+    perspective: 900px;
+    /* Width is set from JS per word; the slide runs under the flip. */
+    transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Out of flow: measures the next word without disturbing the layout. */
+  .flip__ruler {
+    position: absolute;
+    visibility: hidden;
+    white-space: pre;
+    pointer-events: none;
+  }
+
+  .flip > * {
+    grid-area: 1 / 1;
+    white-space: pre;
+  }
+
+  .flip__spacer {
+    visibility: hidden;
+  }
+
+  /* Inside a gilded line the parent paints text transparent, which would swallow the
+     flip layers too — each layer is gilded on its own instead. */
+  .gilded .flip__flap {
+    background: none;
+  }
+
+  .flip__half,
+  .flip__flap {
+    backface-visibility: hidden;
+  }
+
+  /* Opaque, otherwise the layer underneath shows through and both words read at once. */
+  .flip__flap {
+    background: var(--background);
+  }
+
+  /* 52% rather than 50%: the seam lands between the x-height and the baseline, where
+     the split is least visible on a serif face. */
+  .flip__half--top,
+  .flip__flap--top {
+    clip-path: inset(0 0 48% 0);
+  }
+
+  .flip__half--bottom,
+  .flip__flap--bottom {
+    clip-path: inset(52% 0 0 0);
+  }
+
+  .flip__flap--top {
+    transform-origin: center 52%;
+    animation: flap-fall 0.38s cubic-bezier(0.55, 0, 0.85, 0.35) forwards;
+  }
+
+  .flip__flap--bottom {
+    transform-origin: center 52%;
+    animation: flap-land 0.38s cubic-bezier(0.2, 0.7, 0.35, 1) 0.38s backwards;
+  }
+
   /* Two tracks: the wrapper flies in and out, the inner hand flicks on contact.
      One combined movement reads as "hand hovers", not as a slap. */
   .slap-approach {
@@ -198,6 +262,26 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Upper flap of the old word swings down and out of sight. */
+@keyframes flap-fall {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(-90deg);
+  }
+}
+
+/* Lower flap of the new word swings down into place, landing with the seam closed. */
+@keyframes flap-land {
+  from {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0deg);
   }
 }
 
@@ -262,6 +346,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .flip__flap--bottom,
+  .flip__flap--top,
   .impact,
   .knocked,
   .rise,
@@ -269,6 +355,10 @@
   .slap-flick,
   .sweep {
     animation: none;
+  }
+
+  .flip__flap {
+    display: none;
   }
 
   .gilded {

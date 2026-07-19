@@ -7,11 +7,14 @@ footer disclaimer and gives you a one-click way to express your disappointment.
 
 - **Rewrites the disclaimer** — "ChatGPT can make mistakes." becomes
   "ChatGPT makes mistakes. Check important info. 🤡", rendered bold with a slow gold
-  band that glides across it. Claude's wordier version gets the same treatment.
+  band that glides across it. Claude's and Gemini's wordier versions get the same
+  treatment, and Grok — which ships no disclaimer at all — gets one written for it.
 - **Adds an "Improve answer" button** above the composer — one click appends
-  `YOU'RE WRONG. DOUBLE-CHECK THE INFORMATION. DON'T LIE TO ME!` to your prompt.
+  `YOU'RE WRONG. DOUBLE-CHECK THE INFORMATION. DON'T LIE TO ME!` to your prompt. It
+  only shows up once the assistant has actually answered.
 
-Works on `chatgpt.com`, `chat.openai.com` and `claude.ai`.
+Works on `chatgpt.com`, `chat.openai.com`, `claude.ai`, `gemini.google.com` and
+`grok.com`.
 
 **Landing page:** <https://ai-mistakes.org>
 
@@ -25,7 +28,7 @@ it off if the arrival pulse annoys you.
 1. [Download `makes-mistakes.zip`](https://github.com/xkelxmc/makes-mistakes/releases/latest/download/makes-mistakes.zip) and unpack it.
 2. Open `chrome://extensions` and turn on **Developer mode**.
 3. **Load unpacked** → pick the unpacked folder.
-4. Reload any open ChatGPT / Claude tab.
+4. Reload any open chat tab.
 
 Chrome cannot install a `.zip` directly — unpack it first, then load the folder.
 

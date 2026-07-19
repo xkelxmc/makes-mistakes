@@ -34,11 +34,22 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
-          gh release create "$TAG" \
-            --title "$TAG" \
-            --generate-notes \
-            "dist/makes-mistakes-${TAG#v}.zip" \
-            "dist/makes-mistakes.zip"
+          # The release notes are the changelog section for this version — everything
+          # between its heading and the next one.
+          awk -v ver="## [${TAG#v}]" '
+            index($0, ver) == 1 { on = 1; next }
+            on && /^## \[/ { exit }
+            on { print }
+          ' CHANGELOG.md > /tmp/notes.md
+
+          if [ -s /tmp/notes.md ]; then
+            gh release create "$TAG" --title "$TAG" --notes-file /tmp/notes.md \
+              "dist/makes-mistakes-${TAG#v}.zip" "dist/makes-mistakes.zip"
+          else
+            echo "::warning::No changelog entry for $TAG — falling back to generated notes."
+            gh release create "$TAG" --title "$TAG" --generate-notes \
+              "dist/makes-mistakes-${TAG#v}.zip" "dist/makes-mistakes.zip"
+          fi
 
       # Skipped until the Chrome Web Store secrets are configured, so tagging works
       # before the listing exists. Upload and publish share one step to keep the

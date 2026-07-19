@@ -2,10 +2,12 @@ import { createFileRoute } from "@tanstack/react-router"
 import { Download, Palette, Type, Zap } from "lucide-react"
 import { ChatMock } from "@/components/chat-mock"
 import { ComingSoon } from "@/components/coming-soon"
+import { FlipWord } from "@/components/flip-word"
 import { GithubMark } from "@/components/github-mark"
 import { SiteFooter } from "@/components/site-footer"
 import { track } from "@/lib/analytics"
 import { links } from "@/lib/links"
+import { models } from "@/lib/models"
 
 export const Route = createFileRoute("/")({ component: Home })
 
@@ -57,7 +59,7 @@ function Home() {
           <h1 className="font-heading rise mt-6 text-[clamp(2.75rem,9vw,5.5rem)] leading-[1.04] tracking-tight [animation-delay:80ms]">
             {/* Reads correctly with the struck-out words ignored: "ChatGPT makes mistakes." */}
             <span className="block">
-              ChatGPT{" "}
+              <FlipWord words={models} />{" "}
               <span className="text-muted-foreground/45 relative italic">
                 can make
                 <span className="bg-gold absolute inset-x-[-0.06em] top-[0.63em] h-[0.045em] -rotate-[0.6deg] rounded-full" />

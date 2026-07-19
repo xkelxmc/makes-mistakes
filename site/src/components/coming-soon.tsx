@@ -1,5 +1,8 @@
 import { BookOpen, Flame, Languages, Scissors, SearchCheck, Sparkles, Zap } from "lucide-react"
+import { Lightbulb } from "lucide-react"
 import { WishlistForm } from "@/components/wishlist-form"
+import { track } from "@/lib/analytics"
+import { links } from "@/lib/links"
 
 // The one that ships today, followed by what the paid version is meant to add.
 const shipped = { icon: Zap, label: "Improve answer" }
@@ -57,6 +60,29 @@ export function ComingSoon() {
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="border-gold/15 bg-gold/[0.03] mt-6 flex flex-col gap-5 rounded-2xl border px-6 py-7 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+        <div className="flex gap-4">
+          <Lightbulb className="text-gold mt-0.5 size-6 flex-none" strokeWidth={1.2} aria-hidden />
+          <div>
+            <h3 className="font-heading text-xl leading-tight">Got an idea?</h3>
+            <p className="text-muted-foreground mt-1.5 max-w-lg text-sm leading-relaxed">
+              A prompt you keep retyping, a button the toolbar is missing, another site worth
+              supporting — anything that would make this better. Tell us and it goes on the list.
+            </p>
+          </div>
+        </div>
+
+        <a
+          href={links.suggest}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => track("suggest")}
+          className="border-gold/40 text-gold-lit hover:border-gold hover:bg-gold/10 inline-flex h-11 flex-none items-center justify-center gap-2 rounded-full border px-6 text-sm font-semibold transition-colors"
+        >
+          Suggest a feature
+        </a>
       </div>
     </section>
   )
