@@ -13,5 +13,5 @@ export const links = {
 export const site = {
   name: "Makes Mistakes",
   tagline: "They don't can make mistakes. They make them.",
-  url: "https://makes-mistakes.vercel.app",
+  url: "https://makes-mistakes-theta.vercel.app",
 }

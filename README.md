@@ -13,6 +13,8 @@ footer disclaimer and gives you a one-click way to express your disappointment.
 
 Works on `chatgpt.com`, `chat.openai.com` and `claude.ai`.
 
+**Landing page:** <https://makes-mistakes-theta.vercel.app>
+
 ## Settings
 
 Click the extension icon. One switch: **Flash the button once when it appears** — turn
