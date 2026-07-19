@@ -42,19 +42,21 @@ function Home() {
           </p>
 
           <h1 className="font-heading rise mt-6 text-[clamp(2.75rem,9vw,5.5rem)] leading-[1.04] tracking-tight [animation-delay:80ms]">
+            {/* Reads correctly with the struck-out words ignored: "ChatGPT makes mistakes." */}
             <span className="block">
-              They don't{" "}
-              <span className="text-muted-foreground/70 relative italic">
+              ChatGPT{" "}
+              <span className="text-muted-foreground/45 relative italic">
                 can make
-                <span className="bg-gold/70 absolute inset-x-0 top-1/2 h-px -rotate-2" />
+                <span className="bg-gold absolute inset-x-[-0.06em] top-[0.52em] h-[0.045em] -rotate-1 rounded-full" />
               </span>
             </span>
-            <span className="gilded sweep mt-2 block font-normal">mistakes. They make them.</span>
+            <span className="gilded sweep mt-1 block font-normal">makes mistakes.</span>
           </h1>
 
           <p className="rise text-muted-foreground mt-8 max-w-xl text-base leading-relaxed [animation-delay:160ms] sm:text-lg">
-            A very small extension that edits the footer disclaimer on ChatGPT and Claude, gilds
-            what's left, and hands you a button for when the answer is confidently wrong.
+            A very small extension that drops the hedge from the footer disclaimer on ChatGPT and
+            Claude, gilds what's left, and hands you a button for when the answer is confidently
+            wrong.
           </p>
 
           <div className="rise mt-10 flex flex-wrap items-center gap-4 [animation-delay:240ms]">

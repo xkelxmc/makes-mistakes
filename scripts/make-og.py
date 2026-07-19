@@ -48,14 +48,15 @@ kicker = sans(19, 500)
 
 draw.text((80, 88), "C H R O M E   E X T E N S I O N", font=kicker, fill=MUTED)
 
+# Reads correctly with the struck-out words ignored: "ChatGPT makes mistakes."
 y = 176
-draw.text((80, y), "They don't ", font=title, fill=CREAM)
-offset = draw.textlength("They don't ", font=title)
+draw.text((80, y), "ChatGPT ", font=title, fill=CREAM)
+offset = draw.textlength("ChatGPT ", font=title)
 draw.text((80 + offset, y), "can make", font=title, fill=FADED)
 strike = draw.textlength("can make", font=title)
-draw.line([(80 + offset, y + 74), (80 + offset + strike, y + 68)], fill=GOLD, width=3)
+draw.line([(80 + offset - 4, y + 74), (80 + offset + strike + 4, y + 69)], fill=GOLD, width=5)
 
-draw.text((80, y + 96), "mistakes. They make them.", font=title, fill=GOLD_LIT)
+draw.text((80, y + 96), "makes mistakes.", font=title, fill=GOLD_LIT)
 
 draw.text((80, 430), "Rewrites the ChatGPT and Claude disclaimer.", font=body, fill=MUTED)
 draw.text((80, 468), "No hedging, one clown, a slow gold shimmer.", font=body, fill=MUTED)
