@@ -29,8 +29,8 @@ export function ComingSoon() {
 
           <p className="text-muted-foreground mt-4 max-w-xl text-sm leading-relaxed">
             The paid version turns this into a proper toolbar: a library of one-click prompts,
-            buttons you write yourself, and different sets for ChatGPT and Claude. The free
-            extension keeps doing what it does today — nothing gets taken away.
+            buttons you write yourself, and different sets for each chat. The free extension keeps
+            doing what it does today — nothing gets taken away.
           </p>
 
           <ul className="mt-9 flex flex-wrap gap-2.5">

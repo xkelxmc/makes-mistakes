@@ -4,6 +4,7 @@
 .vercel
 dist
 node_modules
+promo
 site/.nitro
 site/.output
 site/.tanstack

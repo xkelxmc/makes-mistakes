@@ -14,11 +14,11 @@ const sections = [
   },
   {
     title: "What it can see",
-    body: "The content script runs only on chatgpt.com, chat.openai.com and claude.ai. It reads the page text to find the disclaimer sentence and rewrites it. Your conversations are never copied, stored, or transmitted.",
+    body: "The content script runs only on chatgpt.com, chat.openai.com, claude.ai, gemini.google.com and grok.com. It reads the page text to find the disclaimer sentence and rewrites it. Your conversations are never copied, stored, or transmitted.",
   },
   {
     title: "Permissions",
-    body: "Only `storage`, used for the setting above. No host permissions beyond the three sites listed in the manifest.",
+    body: "Only `storage`, used for the setting above. No host permissions beyond the five sites listed in the manifest.",
   },
   {
     title: "Changes",
