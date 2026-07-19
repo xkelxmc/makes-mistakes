@@ -24,12 +24,15 @@ export const Route = createRootRoute({
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: `${site.url}/og.png?v=2` },
     ],
+    // Served from our own domain (see routes/stats.$.ts) so ad blockers have nothing to
+    // match on; data-host-url sends the collected events back through the same proxy.
     scripts: umamiWebsiteId
       ? [
           {
-            src: "https://cloud.umami.is/script.js",
+            src: "/stats/script.js",
             defer: true,
             "data-website-id": umamiWebsiteId,
+            "data-host-url": "/stats",
           },
         ]
       : [],
