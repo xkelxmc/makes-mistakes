@@ -1,7 +1,18 @@
 # Makes Mistakes 🤡
 
+[![Release](https://github.com/xkelxmc/makes-mistakes/actions/workflows/release.yml/badge.svg)](https://github.com/xkelxmc/makes-mistakes/actions/workflows/release.yml)
+[![GitHub release](https://img.shields.io/github/v/release/xkelxmc/makes-mistakes)](https://github.com/xkelxmc/makes-mistakes/releases/latest)
+[![GitHub last commit](https://img.shields.io/github/last-commit/xkelxmc/makes-mistakes)](https://github.com/xkelxmc/makes-mistakes/commits/main)
+[![License: MIT](https://img.shields.io/github/license/xkelxmc/makes-mistakes)](./LICENSE)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-4285F4)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
+[![Website](https://img.shields.io/badge/ai--mistakes.org-d4af37?label=site)](https://ai-mistakes.org)
+
 A joke Chrome extension for ChatGPT, Claude, Gemini and Grok. It removes the hedge from
 the footer disclaimer and gives you a one-click way to express your disappointment.
+
+<p align="center">
+  <img src="assets/preview.png" width="100%" alt="ChatGPT can make makes mistakes. Check important info. 🤡">
+</p>
 
 ## What it does
 
