@@ -4,7 +4,7 @@ import { site } from "@/lib/links"
 import appCss from "../styles.css?url"
 
 const description =
-  "A Chrome extension that rewrites the ChatGPT and Claude disclaimers — no hedging, one clown, and a gold shimmer."
+  "A Chrome extension that rewrites the ChatGPT, Claude, Gemini and Grok disclaimers — no hedging, one clown, and a gold shimmer."
 
 export const Route = createRootRoute({
   head: () => ({
