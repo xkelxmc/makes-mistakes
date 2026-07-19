@@ -37,7 +37,7 @@ scripts/           build + Open Graph image generation
 assets/            icon source and the fonts used to draw the OG card
 ```
 
-The extension itself has **no build step** — the repo root *is* the extension.
+The extension itself has **no build step** — the repo root _is_ the extension.
 
 ## Commands
 
