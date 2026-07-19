@@ -27,8 +27,15 @@ const features = [
 ]
 
 const steps = [
-  "Download the .zip from the latest release and unpack it.",
-  "Open chrome://extensions and turn on Developer mode.",
+  <>
+    <a href={links.zip} className="text-gold-lit hover:text-gold underline underline-offset-4">
+      Download makes-mistakes.zip
+    </a>{" "}
+    and unpack it.
+  </>,
+  <>
+    Open <code className="text-foreground/80">chrome://extensions</code> and turn on Developer mode.
+  </>,
   "Click Load unpacked and pick the unpacked folder.",
   "Reload any open ChatGPT or Claude tab.",
 ]
@@ -77,7 +84,7 @@ function Home() {
             )}
 
             <a
-              href={links.releases}
+              href={links.zip}
               className="border-gold/40 text-gold-lit hover:border-gold hover:bg-gold/8 inline-flex h-11 items-center gap-2 rounded-full border px-6 text-sm font-medium transition-colors"
             >
               <Download className="size-4" aria-hidden />
@@ -141,7 +148,7 @@ function Home() {
 
           <ol className="flex flex-col gap-4">
             {steps.map((step, index) => (
-              <li key={step} className="flex gap-4 text-sm leading-relaxed">
+              <li key={index} className="flex gap-4 text-sm leading-relaxed">
                 <span className="border-gold/30 text-gold mt-0.5 flex size-6 flex-none items-center justify-center rounded-full border text-[11px]">
                   {index + 1}
                 </span>

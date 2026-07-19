@@ -37,7 +37,8 @@ jobs:
           gh release create "$TAG" \
             --title "$TAG" \
             --generate-notes \
-            "dist/makes-mistakes-${TAG#v}.zip"
+            "dist/makes-mistakes-${TAG#v}.zip" \
+            "dist/makes-mistakes.zip"
 
       # Skipped until the Chrome Web Store secrets are configured, so tagging works
       # before the listing exists. Upload and publish share one step to keep the

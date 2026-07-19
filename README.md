@@ -22,7 +22,7 @@ it off if the arrival pulse annoys you.
 
 ## Install (unpacked)
 
-1. Grab the `.zip` from the [latest release](https://github.com/xkelxmc/makes-mistakes/releases/latest) and unpack it.
+1. [Download `makes-mistakes.zip`](https://github.com/xkelxmc/makes-mistakes/releases/latest/download/makes-mistakes.zip) and unpack it.
 2. Open `chrome://extensions` and turn on **Developer mode**.
 3. **Load unpacked** → pick the unpacked folder.
 4. Reload any open ChatGPT / Claude tab.
@@ -45,7 +45,7 @@ The extension itself has **no build step** — the repo root _is_ the extension.
 
 ```bash
 bun run check:fix   # lint + format (oxlint + oxfmt)
-bun run build       # dist/makes-mistakes + dist/makes-mistakes-<version>.zip
+bun run build       # dist/makes-mistakes + versioned and version-less zips
 bun run dev         # landing page on :9224
 bun run dev:portless  # landing page at makes-mistakes.localhost
 ```

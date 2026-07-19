@@ -15,6 +15,9 @@ const kitFormId = import.meta.env.VITE_KIT_FORM_ID?.trim()
 export const links = {
   github: "https://github.com/xkelxmc/makes-mistakes",
   releases: "https://github.com/xkelxmc/makes-mistakes/releases/latest",
+  // Resolves to the newest release's asset — the build publishes a version-less copy
+  // precisely so this stays valid.
+  zip: "https://github.com/xkelxmc/makes-mistakes/releases/latest/download/makes-mistakes.zip",
   issues: "https://github.com/xkelxmc/makes-mistakes/issues",
   chromeWebStore: storeUrl,
   install: storeUrl ?? "https://github.com/xkelxmc/makes-mistakes/releases/latest",
