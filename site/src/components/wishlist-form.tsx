@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { ArrowRight, LoaderCircle, MailCheck } from "lucide-react"
+import { track } from "@/lib/analytics"
 import { links } from "@/lib/links"
 
 type State = "idle" | "sending" | "done" | "error"
@@ -46,6 +47,7 @@ export function WishlistForm() {
 
       setState("done")
       setEmail("")
+      track("wishlist")
     } catch {
       setState("error")
     }

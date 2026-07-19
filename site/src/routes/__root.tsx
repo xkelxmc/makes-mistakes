@@ -1,4 +1,5 @@
 import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router"
+import { umamiWebsiteId } from "@/lib/analytics"
 import { site } from "@/lib/links"
 import appCss from "../styles.css?url"
 
@@ -23,6 +24,15 @@ export const Route = createRootRoute({
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: `${site.url}/og.png` },
     ],
+    scripts: umamiWebsiteId
+      ? [
+          {
+            src: "https://cloud.umami.is/script.js",
+            defer: true,
+            "data-website-id": umamiWebsiteId,
+          },
+        ]
+      : [],
     links: [
       { rel: "stylesheet", href: appCss },
       {

@@ -4,6 +4,7 @@ import { ChatMock } from "@/components/chat-mock"
 import { ComingSoon } from "@/components/coming-soon"
 import { GithubMark } from "@/components/github-mark"
 import { SiteFooter } from "@/components/site-footer"
+import { track } from "@/lib/analytics"
 import { links } from "@/lib/links"
 
 export const Route = createFileRoute("/")({ component: Home })
@@ -28,7 +29,11 @@ const features = [
 
 const steps = [
   <>
-    <a href={links.zip} className="text-gold-lit hover:text-gold underline underline-offset-4">
+    <a
+      href={links.zip}
+      onClick={() => track("download", { from: "steps" })}
+      className="text-gold-lit hover:text-gold underline underline-offset-4"
+    >
       Download makes-mistakes.zip
     </a>{" "}
     and unpack it.
@@ -71,7 +76,11 @@ function Home() {
             {/* Google's branding guidelines: the badge is used unmodified, only resized,
                 and may only link to a live Chrome Web Store listing. */}
             {links.chromeWebStore && (
-              <a href={links.chromeWebStore} className="transition-opacity hover:opacity-85">
+              <a
+                href={links.chromeWebStore}
+                onClick={() => track("store")}
+                className="transition-opacity hover:opacity-85"
+              >
                 <img
                   src="/chrome-web-store/badge-border-medium.png"
                   srcSet="/chrome-web-store/badge-border-medium.png 340w, /chrome-web-store/badge-border-large.png 496w"
@@ -85,6 +94,7 @@ function Home() {
 
             <a
               href={links.zip}
+              onClick={() => track("download", { from: "hero" })}
               className="border-gold/40 text-gold-lit hover:border-gold hover:bg-gold/8 inline-flex h-11 items-center gap-2 rounded-full border px-6 text-sm font-medium transition-colors"
             >
               <Download className="size-4" aria-hidden />
