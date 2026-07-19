@@ -1,7 +1,7 @@
 # Makes Mistakes 🤡
 
-A joke Chrome extension for chatgpt.com and claude.ai. It removes the hedge from the
-footer disclaimer and gives you a one-click way to express your disappointment.
+A joke Chrome extension for ChatGPT, Claude, Gemini and Grok. It removes the hedge from
+the footer disclaimer and gives you a one-click way to express your disappointment.
 
 ## What it does
 
