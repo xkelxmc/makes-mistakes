@@ -35,6 +35,7 @@ export const Route = createRootRoute({
       : [],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: site.url },
       {
         rel: "icon",
         href: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤡</text></svg>",
@@ -42,9 +43,18 @@ export const Route = createRootRoute({
     ],
   }),
   notFoundComponent: NotFound,
-  component: Outlet,
+  component: RootLayout,
   shellComponent: RootDocument,
 })
+
+// Full-height column so short pages (like /privacy) still push the footer to the bottom.
+function RootLayout() {
+  return (
+    <div className="flex min-h-svh flex-col">
+      <Outlet />
+    </div>
+  )
+}
 
 function NotFound() {
   return (
