@@ -21,6 +21,10 @@ const sections = [
     body: "Only `storage`, used for the setting above. No host permissions beyond the five sites listed in the manifest.",
   },
   {
+    title: "ai-mistakes.org",
+    body: "The website, which is separate from the extension. Visits are counted with Umami, proxied through this domain. Each request sends the page address and title, the site that linked you here, and your browser language and screen size; from your IP address and user agent Umami derives a country, a browser, an operating system and a device type, along with the hash that stands in for a session. It sets no cookies, identifies nobody, and follows nobody across sites. Clicks on the download and install buttons are recorded the same way. If you join the wishlist, your email address goes to Kit, who send the confirmation and keep it until you unsubscribe.",
+  },
+  {
     title: "Changes",
     body: "If this ever changes, it changes in public — the extension is open source and every version is tagged on GitHub.",
   },

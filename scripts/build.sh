@@ -10,8 +10,11 @@ rm -rf dist
 mkdir -p "$out"
 cp manifest.json "$out/"
 cp -R src "$out/"
+find "$out" -name .DS_Store -delete
 
-(cd dist && zip -qr "makes-mistakes-$version.zip" makes-mistakes)
+# Zipped from inside the folder: the store expects manifest.json at the root of the
+# archive rather than nested under a directory.
+(cd "$out" && zip -qr "../makes-mistakes-$version.zip" .)
 
 # Same archive under a version-less name: /releases/latest/download only resolves a
 # fixed filename, so this is what the landing page can link to directly.

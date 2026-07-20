@@ -8,6 +8,27 @@ The version in `manifest.json` is the source of truth — a release tag must mat
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-07-20
+
+### Fixed
+
+- The rewrite now only touches each host's own disclaimer element. It used to run over
+  every text node on the page, so quoting "ChatGPT can make mistakes" in the composer
+  had the word silently removed from what you were about to send, and the same sentence
+  inside an answer was rewritten mid-paragraph.
+- Colours follow the chat's own theme rather than the operating system's. With ChatGPT
+  in light mode on a dark-mode machine the rewritten line was near-white on white.
+- On Claude the button appeared in an empty chat and while an answer was still
+  streaming; it now waits for the answer to finish.
+- The button and its rail are dropped when a thread is cleared instead of lingering
+  until an unrelated change happened to redraw them.
+- The popup's flash setting applies to tabs that are already open.
+
+### Changed
+
+- The archive holds `manifest.json` at its root, as the Chrome Web Store expects.
+- The manifest description mentions the button, not only the rewritten disclaimer.
+
 ## [1.1.0] - 2026-07-20
 
 ### Added
@@ -35,6 +56,7 @@ The version in `manifest.json` is the source of truth — a release tag must mat
 - Popup setting to turn off the button's arrival flash.
 - Extension icons at 16/32/48/128.
 
-[unreleased]: https://github.com/xkelxmc/makes-mistakes/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/xkelxmc/makes-mistakes/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/xkelxmc/makes-mistakes/releases/tag/v1.2.0
 [1.1.0]: https://github.com/xkelxmc/makes-mistakes/releases/tag/v1.1.0
 [1.0.0]: https://github.com/xkelxmc/makes-mistakes/releases/tag/v1.0.0

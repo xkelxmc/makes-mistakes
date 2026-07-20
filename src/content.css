@@ -5,10 +5,11 @@
   --mm-text: #ffffff;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --mm-text: #38383a;
-  }
+/* Set by the content script from the host's own theme rather than the OS preference:
+   the two disagree often enough that light-mode ChatGPT on a dark-mode machine left
+   near-white text on a white footer. */
+:root[data-mm-theme="light"] {
+  --mm-text: #38383a;
 }
 
 /* The text keeps its own colour; only a narrow gold band travels across it. */

@@ -1,6 +1,16 @@
 // Each host words it differently: Claude and Gemini insert "is AI and", and Gemini
 // ends the clause with a comma rather than a full stop — so no trailing punctuation.
 const DISCLAIMER = /\b(ChatGPT|Claude|Gemini|Grok)\b(?:\s+is\s+AI\s+and)?\s+can\s+make\s+mistakes/i
+
+// The rewrite is confined to the host's own disclaimer element. Matching anywhere in the
+// page also caught the composer and the messages themselves, so quoting the sentence in
+// a prompt silently edited what you were about to send.
+const FOOTERS = [
+  '[data-testid="thread-disclaimer"]', // ChatGPT
+  "[data-disclaimer]", // Claude
+  "hallucination-disclaimer", // Gemini
+].join(", ")
+
 const CLOWN = "\u{1F921}"
 const GILDED = "mm-gilded"
 const CLOWN_CLASS = "mm-clown"
@@ -28,7 +38,13 @@ const MOUNTS = [
     // Nothing to improve until the assistant has actually said something.
     needs: '[data-message-author-role="assistant"]',
   }, // ChatGPT
-  { selector: "[data-chat-input-container]", variant: "mm-button--overlay" }, // Claude
+  {
+    selector: "[data-chat-input-container]",
+    variant: "mm-button--overlay",
+    // Claude marks the answer itself, so this also waits out the stream rather than
+    // appearing on the first token like the other hosts.
+    needs: '[data-is-streaming="false"]',
+  }, // Claude
   {
     selector: "input-container",
     variant: "mm-button--flow",
@@ -58,7 +74,21 @@ const GRAFT = {
 const ZAP =
   "M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
 
-const settings = chrome.storage.sync.get({ flash: true })
+// Each host carries its own theme, independent of the OS: ChatGPT and Grok set
+// `color-scheme` on <html>, Claude uses data-mode, Gemini a class on <body>. Reading the
+// OS preference instead put white text on a white footer whenever the two disagreed.
+function theme() {
+  const html = document.documentElement
+  const scheme = getComputedStyle(html).colorScheme
+
+  const dark =
+    scheme === "dark" ||
+    html.dataset.mode === "dark" ||
+    html.classList.contains("dark") ||
+    document.body.classList.contains("dark-theme")
+
+  html.dataset.mmTheme = dark ? "dark" : "light"
+}
 
 function gild(textNode) {
   const text = textNode.nodeValue
@@ -104,17 +134,28 @@ function graft() {
   anchor.after(note)
 }
 
+function gildFooter(footer) {
+  const walker = document.createTreeWalker(footer, NodeFilter.SHOW_TEXT)
+  const found = []
+  while (walker.nextNode()) found.push(walker.currentNode)
+  found.forEach(gild)
+}
+
+// Resolves whatever the observer handed us to the footers it belongs to or contains,
+// and rewrites only those.
 function sweep(root) {
   if (root.nodeType === Node.TEXT_NODE) {
-    gild(root)
+    const footer = root.parentElement?.closest(FOOTERS)
+    if (footer) gild(root)
     return
   }
   if (root.nodeType !== Node.ELEMENT_NODE) return
 
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
-  const found = []
-  while (walker.nextNode()) found.push(walker.currentNode)
-  found.forEach(gild)
+  if (root.closest(FOOTERS)) {
+    gildFooter(root.closest(FOOTERS))
+    return
+  }
+  root.querySelectorAll(FOOTERS).forEach(gildFooter)
 }
 
 function insertNudge() {
@@ -156,7 +197,9 @@ async function flashOnce() {
   if (flashed) return
   flashed = true
 
-  const { flash } = await settings
+  // Read when it is needed rather than once at startup, so toggling the popup setting
+  // takes effect in tabs that were already open.
+  const { flash } = await chrome.storage.sync.get({ flash: true })
   if (flash) button.classList.add("mm-button--flash")
 }
 
@@ -169,7 +212,11 @@ function row(anchor, measured, float) {
   const rail = existing?.classList.contains(RAIL) ? existing : document.createElement("div")
 
   rail.className = float ? `${RAIL} ${RAIL}--float` : RAIL
-  rail.style.width = `${box.getBoundingClientRect().width}px`
+
+  // Only written when it actually changed: this runs on every frame the host streams a
+  // token into, and assigning a width unconditionally forces a layout each time.
+  const width = `${box.getBoundingClientRect().width}px`
+  if (rail.style.width !== width) rail.style.width = width
   if (!rail.isConnected) anchor.before(rail)
 
   return rail
@@ -181,14 +228,12 @@ function mount() {
   )
 
   // Nothing to improve until the assistant has actually answered.
-  const answered =
-    target &&
-    (!target.needs || document.querySelector(target.needs)) &&
-    (!target.inThread || target.inThread.test(location.pathname))
+  const answered = target && (!target.needs || document.querySelector(target.needs))
 
   if (!answered) {
     button.remove()
-    document.querySelector(`.${RAIL}`)?.remove()
+    // All of them: a host that rebuilds its composer elsewhere leaves the old rail behind.
+    document.querySelectorAll(`.${RAIL}`).forEach((rail) => rail.remove())
     return
   }
 
@@ -209,6 +254,7 @@ function flush() {
   const roots = [...pending]
   pending.clear()
   roots.forEach(sweep)
+  theme()
   graft()
   mount()
 }
@@ -221,6 +267,7 @@ function schedule(node) {
 }
 
 sweep(document.body)
+theme()
 graft()
 mount()
 
@@ -228,6 +275,18 @@ mount()
 new MutationObserver((records) => {
   for (const record of records) {
     if (record.type === "characterData") schedule(record.target)
-    else record.addedNodes.forEach(schedule)
+    else if (record.addedNodes.length) record.addedNodes.forEach(schedule)
+    // A cleared thread only removes nodes; without this the button would stay behind
+    // until some unrelated mutation happened to schedule a flush.
+    else if (record.removedNodes.length) schedule(record.target)
   }
 }).observe(document.body, { childList: true, subtree: true, characterData: true })
+
+// Switching theme inside the app only flips an attribute, which the observer above does
+// not watch — without this the colours would stay on the previous theme until some
+// unrelated mutation happened to run a flush. `data-mm-theme` is not in the filter, so
+// writing it cannot retrigger this.
+const themed = new MutationObserver(theme)
+const watched = { attributes: true, attributeFilter: ["class", "style", "data-mode"] }
+themed.observe(document.documentElement, watched)
+themed.observe(document.body, watched)

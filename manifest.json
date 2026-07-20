@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Makes Mistakes",
-  "version": "1.1.0",
-  "description": "Drops the \"can\" from the ChatGPT, Claude, Gemini and Grok disclaimers and gilds what's left.",
+  "version": "1.2.0",
+  "description": "Drops the \"can\" from the ChatGPT, Claude, Gemini and Grok disclaimers, and adds one button that demands a double-check.",
   "permissions": ["storage"],
   "icons": {
     "16": "src/icons/icon-16.png",
