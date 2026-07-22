@@ -1,5 +1,8 @@
 # Makes Mistakes 🤡
 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/bdkpmmjemdjlokblfeicadjfmekfbfip?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/makes-mistakes/bdkpmmjemdjlokblfeicadjfmekfbfip)
+[![Users](https://img.shields.io/chrome-web-store/users/bdkpmmjemdjlokblfeicadjfmekfbfip?label=users)](https://chromewebstore.google.com/detail/makes-mistakes/bdkpmmjemdjlokblfeicadjfmekfbfip)
+[![Rating](https://img.shields.io/chrome-web-store/rating/bdkpmmjemdjlokblfeicadjfmekfbfip?label=rating)](https://chromewebstore.google.com/detail/makes-mistakes/bdkpmmjemdjlokblfeicadjfmekfbfip)
 [![Release](https://github.com/xkelxmc/makes-mistakes/actions/workflows/release.yml/badge.svg)](https://github.com/xkelxmc/makes-mistakes/actions/workflows/release.yml)
 [![GitHub release](https://img.shields.io/github/v/release/xkelxmc/makes-mistakes)](https://github.com/xkelxmc/makes-mistakes/releases/latest)
 [![GitHub last commit](https://img.shields.io/github/last-commit/xkelxmc/makes-mistakes)](https://github.com/xkelxmc/makes-mistakes/commits/main)
@@ -34,7 +37,11 @@ Works on `chatgpt.com`, `chat.openai.com`, `claude.ai`, `gemini.google.com` and
 Click the extension icon. One switch: **Flash the button once when it appears** — turn
 it off if the arrival pulse annoys you.
 
-## Install (unpacked)
+## Install
+
+[**Add to Chrome**](https://chromewebstore.google.com/detail/makes-mistakes/bdkpmmjemdjlokblfeicadjfmekfbfip) — one click from the Chrome Web Store.
+
+### From source (unpacked)
 
 1. [Download `makes-mistakes.zip`](https://github.com/xkelxmc/makes-mistakes/releases/latest/download/makes-mistakes.zip) and unpack it.
 2. Open `chrome://extensions` and turn on **Developer mode**.

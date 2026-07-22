@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Download, Palette, Type, Zap } from "lucide-react"
 import { ChatMock } from "@/components/chat-mock"
+import { ChromeLogo } from "@/components/chrome-logo"
 import { ComingSoon } from "@/components/coming-soon"
 import { FlipWord } from "@/components/flip-word"
 import { GithubMark } from "@/components/github-mark"
@@ -75,52 +76,58 @@ function Home() {
           </p>
 
           <div className="rise mt-10 flex flex-wrap items-center gap-4 [animation-delay:240ms]">
-            {/* Google's branding guidelines: the badge is used unmodified, only resized,
-                and may only link to a live Chrome Web Store listing. */}
-            {links.chromeWebStore && (
+            {/* A white pill with the real Chrome mark — our own button, so it is round and
+                sized to the page. Google's grey badge may not be restyled and is not used. */}
+            {links.chromeWebStore ? (
               <a
                 href={links.chromeWebStore}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => track("store")}
-                className="transition-opacity hover:opacity-85"
+                className="inline-flex h-12 items-center gap-2.5 rounded-full bg-white px-7 text-sm font-semibold text-[#202124] shadow-[0_6px_24px_-8px_rgba(0,0,0,0.7)] transition-colors hover:bg-white/90"
               >
-                <img
-                  src="/chrome-web-store/badge-border-medium.png"
-                  srcSet="/chrome-web-store/badge-border-medium.png 340w, /chrome-web-store/badge-border-large.png 496w"
-                  alt="Available in the Chrome Web Store"
-                  width={340}
-                  height={96}
-                  className="h-12 w-auto"
-                />
+                <ChromeLogo className="size-5" />
+                Add to Chrome
+              </a>
+            ) : (
+              <a
+                href={links.zip}
+                onClick={() => track("download", { from: "hero" })}
+                className="bg-gold text-primary-foreground hover:bg-gold-lit inline-flex h-12 items-center gap-2 rounded-full px-7 text-sm font-semibold shadow-[0_0_36px_-10px_var(--gold)] transition-colors"
+              >
+                <Download className="size-4.5" aria-hidden />
+                Download .zip
               </a>
             )}
-
-            <a
-              href={links.zip}
-              onClick={() => track("download", { from: "hero" })}
-              className="border-gold/40 text-gold-lit hover:border-gold hover:bg-gold/8 inline-flex h-11 items-center gap-2 rounded-full border px-6 text-sm font-medium transition-colors"
-            >
-              <Download className="size-4" aria-hidden />
-              Download .zip
-            </a>
 
             <a
               href={links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground inline-flex h-11 items-center gap-2 px-2 text-sm transition-colors"
+              className="text-muted-foreground hover:text-foreground inline-flex h-12 items-center gap-2 px-2 text-sm transition-colors"
             >
               <GithubMark className="size-4" />
               Source
             </a>
           </div>
 
-          {!links.chromeWebStore && (
-            <p className="rise text-muted-foreground/70 mt-5 text-xs [animation-delay:300ms]">
-              Not on the Chrome Web Store yet — grab the .zip and load it unpacked.
-            </p>
-          )}
+          <p className="rise text-muted-foreground/70 mt-5 text-xs [animation-delay:300ms]">
+            {links.chromeWebStore ? (
+              <>
+                Or{" "}
+                <a
+                  href={links.zip}
+                  onClick={() => track("download", { from: "hero" })}
+                  className="decoration-gold/40 hover:text-gold underline underline-offset-4"
+                >
+                  download the .zip
+                </a>{" "}
+                and load it unpacked.
+              </>
+            ) : (
+              "Not on the Chrome Web Store yet — grab the .zip and load it unpacked."
+            )}
+          </p>
         </section>
 
         <section className="pb-24">
